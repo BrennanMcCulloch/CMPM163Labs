@@ -9,7 +9,7 @@
 		</style>
 	</head>
 	<body>
-		<script src="three.min.js"></script>
+		<script src="../three.js-master/build/three.min.js"></script>
 		<script>
 			var scene = new THREE.Scene();
 			var wind = window.innerWidth/window.innerHeight;
@@ -18,18 +18,34 @@
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			document.body.appendChild(renderer.domElement);
 
+			var blueX = -1;
+			var blueY = 0;
+
 			var geometry = new THREE.BoxGeometry();
 			var materialPink = new THREE.MeshBasicMaterial( {color: 0x0ff69b4} );
      		var cube = new THREE.Mesh(geometry, materialPink);
 			scene.add(cube);
 			camera.position.z = 5; //this moves the camera towards the viewer
 
+			var geometry2 = new THREE.BoxGeometry();
+			var materialBlue = new THREE.MeshBasicMaterial( {color: 0x15f4ee})
+			var cube2 = new THREE.Mesh(geometry2, materialBlue);
+			scene.add(cube2);
+			cube2.position.z = 1
+
 			function animatePink() {
 				requestAnimationFrame(animatePink);
-				renderer.render(scene, camera);
 				geometry.rotateX(0.01);
 				geometry.rotateY(0.01);
+				renderer.render(scene, camera);
 			}
+
+			function animateBlue() {
+				requestAnimationFrame(animateBlue);
+				geometry2.translate(blueX, blueY, 0);
+			}
+
+			animateBlue();
 
 			animatePink();
 		</script>
