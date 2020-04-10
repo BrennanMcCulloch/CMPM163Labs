@@ -18,12 +18,30 @@
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			document.body.appendChild(renderer.domElement);
 
+			var pinkTimeX = 0.01;
+			var pinkTimeY = 1.01;
+
+			var generateNoise = new noise();
+
 			var blueX = -1;
+			var increaseX = true;
 			var blueY = 0;
+			var increaseY = true;
+			var scale = 3;
+
+			var generateNoiseGreenX = new noise();
+			generateNoiseGreenX.amplitude = 2;
+			var generateNoiseGreenY = new noise();
+			generateNoiseGreenY.amplitude = 2;
+			var generateNoiseGreenZ = new noise();
+			generateNoiseGreenZ.amplitude = 2;
+			var feed = 0;
 
 			var geometry = new THREE.BoxGeometry();
 			var materialPink = new THREE.MeshBasicMaterial( {color: 0x0ff69b4} );
      		var cube = new THREE.Mesh(geometry, materialPink);
+     		cube.position.x = 2.5;
+			cube.position.y = 2.5;
 			scene.add(cube);
 			camera.position.z = 5; //this moves the camera towards the viewer
 
@@ -31,23 +49,116 @@
 			var materialBlue = new THREE.MeshBasicMaterial( {color: 0x15f4ee})
 			var cube2 = new THREE.Mesh(geometry2, materialBlue);
 			scene.add(cube2);
-			cube2.position.z = 1
+			cube2.position.z = -scale
+
+			var geometry3 = new THREE.BoxGeometry();
+			var materialGreen = new THREE.MeshBasicMaterial( {color: 0x0add08})
+			var cube3 = new THREE.Mesh(geometry3, materialGreen);
+			cube3.rotation.x = 0.2;
+			cube3.rotation.y = 0.2;
+			cube3.rotation.z = 0.2;
+			scene.add(cube3);
+			cube2.position.z = -scale
 
 			function animatePink() {
 				requestAnimationFrame(animatePink);
-				geometry.rotateX(0.01);
-				geometry.rotateY(0.01);
+				geometry.rotateX(0.1 * generateNoise.getVal(pinkTimeX));
+				geometry.rotateY(0.1 * generateNoise.getVal(pinkTimeY));
 				renderer.render(scene, camera);
+				pinkTimeX += 0.01
+				pinkTimeY += 0.01
 			}
 
 			function animateBlue() {
 				requestAnimationFrame(animateBlue);
-				geometry2.translate(blueX, blueY, 0);
+				blueX = oscillateX(blueX);
+				blueY = oscillateY(blueY);
+				cube2.position.x = blueX * scale;
+				cube2.position.y = blueY * scale;
+				renderer.render(scene, camera);
 			}
 
-			animateBlue();
+			function animateGreen() {
+				requestAnimationFrame(animateGreen);
+				cube3.scale.x = generateNoiseGreenX.getVal(feed);
+				cube3.scale.y = generateNoiseGreenY.getVal(feed);
+				cube3.scale.z = generateNoiseGreenZ.getVal(feed);
+				feed += 0.01;
+				renderer.render(scene, camera);
+			}
 
+			function oscillateX(variable) {
+				if (variable > 1) {
+					increaseX = false;
+				}
+				else if (variable < -1) {
+					increaseX = true;
+				}
+
+				if(increaseX) {
+					return variable + 0.01;
+				}
+				else {
+					return variable - 0.01;
+				}
+			}
+
+			function oscillateY(variable) {
+				if (variable > 1) {
+					increaseY = false;
+				}
+				else if (variable < -1) {
+					increaseY = true;
+				}
+
+				if(increaseY) {
+					return variable + 0.01;
+				}
+				else {
+					return variable - 0.01;
+				}
+			}
+
+			//note: i read along with an article made by Michael Bromley and made this 1D perlin noise function from that. 
+			function noise() {
+				var maxVerts = 256;
+				var maxVertsMask = maxVerts -1;
+				var amplitude = 1;
+				var scale = 1;
+
+				var r = [];
+
+				for(var i = 0; i < maxVerts; i++) {
+					r.push(Math.random());
+				}
+
+				function getVal( x ) {
+					var scaledX = x * scale;
+					var xFloor = Math.floor(scaledX);
+					var t = scaledX - xFloor;
+					var tRemapSmoothstep = t * t * (3 - 2 * t);
+
+					var xMin = xFloor % maxVertsMask;
+					var xMax = (xMin + 1) % maxVertsMask;
+
+					var y = lerp(r[xMin], r[xMax], tRemapSmoothstep);
+
+					return y * amplitude;
+				};
+
+				var lerp = function(a, b, t) {
+					return a * (1-t) + b * t;
+				};
+
+				// return the API
+   				return {
+        			getVal: getVal
+    			};
+			};
+
+			animateBlue();
 			animatePink();
+			animateGreen();
 		</script>
 	</body>
 </html>
