@@ -21,17 +21,40 @@
 			
 			// setup the cube
 			var geometry = new THREE.BoxGeometry();
-      		var material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+			var texture = new THREE.TextureLoader().load("151.jpg");
+			var normMap = new THREE.TextureLoader().load("151_norm.jpg");
+			var material = new THREE.MeshPhongMaterial({map: texture, normalMap: normMap});
       		var cube = new THREE.Mesh(geometry, material);
    			scene.add(cube);
+
+			var materialAgain = new THREE.MeshPhongMaterial({map: texture});
+			var cube2 = new THREE.Mesh(geometry, materialAgain);
+			scene.add(cube2);
+			cube2.position.x -= 2;
+
+			// setup the cube3
+			var geometry3 = new THREE.BoxGeometry();
+			var texture3 = new THREE.TextureLoader().load("156.jpg");
+			var normMap3 = new THREE.TextureLoader().load("156_norm.jpg");
+			var material3 = new THREE.MeshPhongMaterial({map: texture3, normalMap: normMap3});
+      		var cube3 = new THREE.Mesh(geometry3, material3);
+   			scene.add(cube3);
+   			cube3.position.x += 2;
 
 			// add the light
 			var light = new THREE.PointLight(0xffffff, 1, 1000);
 			light.position.set(10, 10, 10);
 			scene.add(light);
 
+			tempX = true;
 			function animate() {
 				requestAnimationFrame(animate);
+				if(tempX) {light.position.x -= 0.5;}
+				else {light.position.x += 0.5;}
+
+				if(light.position.x < -10) {tempX = false;}
+				if(light.position.x > 10) {tempX = true;}
+
 				renderer.render(scene, camera);
 			}
 			animate();
