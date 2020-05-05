@@ -1,5 +1,9 @@
 # CMPM163Labs
 
+Lab 5: https://drive.google.com/file/d/1LsFdQZzBZn2YVF9f95iWQCNIiz5edvNM/view?usp=sharing
+
+I followed the tutorial (for the most part) and modified the materials on some objects.
+
 Lab 4: https://drive.google.com/file/d/1L3AxlbSJFUyt9_EVeuteFes7PL35ASAz/view?usp=sharing
 
 I made the cubes by following the assignment's instructions. I made the fifth cube my modulo-ing
