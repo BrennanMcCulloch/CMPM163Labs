@@ -1,5 +1,10 @@
 # CMPM163Labs
 
+Lab 7: https://drive.google.com/file/d/1Z4AvDx_0GqlYKfJAdqC27dZIWliOqj9s/view?usp=sharing 
+We each did the assignment individually, but at the same time. We worked together to make sure we both understood it.
+I made the scene by following the tutorial to the letter and doing some extra shenanigans with the trees. 
+Cool beans.
+
 Lab 6: 
 
 Point light: illuminates entirely around a point. Rotation doesn’t matter, while position does.
