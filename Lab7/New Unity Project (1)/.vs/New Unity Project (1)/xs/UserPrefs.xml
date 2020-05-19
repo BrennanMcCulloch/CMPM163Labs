@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{E9F6A016-2E51-0BDE-BADE-0AF8BEBF4684}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/WavyWaterShader.shader">
+    <Files>
+      <File FileName="Assets/WavyWaterShader.shader" Line="22" Column="40" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
